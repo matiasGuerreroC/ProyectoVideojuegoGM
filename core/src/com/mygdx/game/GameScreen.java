@@ -13,10 +13,11 @@ import com.badlogic.gdx.utils.ScreenUtils;
 public class GameScreen implements Screen {
 	final GameLluviaMenu game;
     private OrthographicCamera camera;
-	private SpriteBatch batch;	   
+	private SpriteBatch batch;   
 	private BitmapFont font;
 	private Tarro tarro;
 	private Lluvia lluvia;
+	private Carretera fondo;
 
 	   
 	//boolean activo = true;
@@ -25,6 +26,9 @@ public class GameScreen implements Screen {
 		this.game = game;
         this.batch = game.getBatch();
         this.font = game.getFont();
+        
+        fondo = new Carretera();
+        
 		  // load the images for the droplet and the bucket, 64x64 pixels each 	     
 		  Sound hurtSound = Gdx.audio.newSound(Gdx.files.internal("hurt.ogg"));
 		  tarro = new Tarro(new Texture(Gdx.files.internal("auto2.png")),hurtSound);
@@ -58,6 +62,9 @@ public class GameScreen implements Screen {
 		//actualizar 
 		batch.setProjectionMatrix(camera.combined);
 		batch.begin();
+		
+		fondo.render(batch);
+		
 		//dibujar textos
 		font.draw(batch, "Gotas totales: " + tarro.getPuntos(), 5, 475);
 		font.draw(batch, "Vidas : " + tarro.getVidas(), 670, 475);
