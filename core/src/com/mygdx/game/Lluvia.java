@@ -37,8 +37,8 @@ public class Lluvia {
 	
 	private void crearGotaDeLluvia() {
 	      Rectangle raindrop = new Rectangle();
-	      raindrop.x = MathUtils.random(0, 800-64);
-	      raindrop.y = 480;
+	      raindrop.x = MathUtils.random(0, 813-64);
+	      raindrop.y = 600;
 	      raindrop.width = 64;
 	      raindrop.height = 64;
 	      rainDropsPos.add(raindrop);
