@@ -3,6 +3,7 @@ package com.mygdx.game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.ScreenUtils;
@@ -12,6 +13,7 @@ public class GameOverScreen implements Screen {
 	private SpriteBatch batch;	   
 	private BitmapFont font;
 	private OrthographicCamera camera;
+	private Texture fondo;
 
 	public GameOverScreen(final GameLluviaMenu game) {
 		this.game = game;
@@ -23,13 +25,19 @@ public class GameOverScreen implements Screen {
 
 	@Override
 	public void render(float delta) {
-		ScreenUtils.clear(0, 0, 0.2f, 1);
+		//ScreenUtils.clear(0, 0, 0.2f, 1);
 		camera.update();
 		batch.setProjectionMatrix(camera.combined);
 
 		batch.begin();
-		font.draw(batch, "GAME OVER ", 100, 200);
-		font.draw(batch, "Toca en cualquier lado para reiniciar.", 100, 100);
+		
+		//Dibujar fondo
+		batch.draw(fondo, 0, 0, 800, 480);
+		
+		font.getData().setScale(3, 3);
+		font.draw(batch, "GAME OVER ", 50, 400);
+		font.getData().setScale(1, 1);
+		font.draw(batch, "Toca en cualquier lado para reiniciar.", 50, 300);
 		batch.end();
 
 		if (Gdx.input.isTouched()) {
@@ -41,6 +49,7 @@ public class GameOverScreen implements Screen {
 	@Override
 	public void show() {
 		// TODO Auto-generated method stub
+		fondo = new Texture(Gdx.files.internal("gameover.jpg"));
 		
 	}
 
@@ -71,6 +80,7 @@ public class GameOverScreen implements Screen {
 	@Override
 	public void dispose() {
 		// TODO Auto-generated method stub
+		fondo.dispose();
 		
 	}
 
