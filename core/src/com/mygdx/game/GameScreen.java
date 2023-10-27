@@ -15,7 +15,8 @@ public class GameScreen implements Screen {
 	private SpriteBatch batch;   
 	private BitmapFont font;
 	private Auto auto;
-	private Lluvia lluvia;
+	private ObjetoBueno monedas;
+	private Obstaculo obstaculos;
 	private Carretera fondo;
 
 	   
@@ -28,33 +29,36 @@ public class GameScreen implements Screen {
         
         fondo = new Carretera();
         
-		  // load the images for the droplet and the bucket, 64x64 pixels each
-		  auto = new Auto(new Texture(Gdx.files.internal("auto.png")));
+        auto = new Auto(new Texture(Gdx.files.internal("auto.png")));
          
-	      // load the drop sound effect and the rain background "music" 
-         Texture gota = new Texture(Gdx.files.internal("coin.png"));
-         Texture cono = new Texture(Gdx.files.internal("cono.png"));
+        Texture moneda = new Texture(Gdx.files.internal("coin.png"));
+        Texture cono = new Texture(Gdx.files.internal("cono.png"));
          
-         Sound dropSound = Gdx.audio.newSound(Gdx.files.internal("collect_coin.mp3"));
-        
-	     Music rainMusic = Gdx.audio.newMusic(Gdx.files.internal("car_acceleration.mp3"));
-         lluvia = new Lluvia(gota, cono, dropSound, rainMusic);
-	      
-	      // camera
-	      camera = new OrthographicCamera();
-	      camera.setToOrtho(false, 813, 600);
-	      batch = new SpriteBatch();
-	      // creacion del tarro
-	      auto.crear();
-	      
-	      // creacion de la lluvia
-	      lluvia.crear();
+		Sound coinSound = Gdx.audio.newSound(Gdx.files.internal("collect_coin.mp3"));
+		Sound crashSound = Gdx.audio.newSound(Gdx.files.internal("crash.mp3"));
+		Music carMusic = Gdx.audio.newMusic(Gdx.files.internal("car_acceleration.mp3"));
+		 
+		monedas = new ObjetoBueno(moneda, coinSound, carMusic);
+		obstaculos = new Obstaculo(cono, crashSound, carMusic);
+		  
+		// camera
+		camera = new OrthographicCamera();
+		camera.setToOrtho(false, 813, 600);
+		batch = new SpriteBatch();
+		  
+		// creacion del auto
+		auto.crear();
+		  
+		// creacion de los objetos
+		monedas.crear();
+		obstaculos.crear();
 	}
 
 	@Override
 	public void render(float delta) {
 		//actualizar matrices de la cámara
 		camera.update();
+		
 		//actualizar 
 		batch.setProjectionMatrix(camera.combined);
 		batch.begin();
@@ -67,10 +71,10 @@ public class GameScreen implements Screen {
 		font.draw(batch, "HighScore : " + game.getHigherScore(), camera.viewportWidth/2-50, 595);
 		
 		if (!auto.estaChocado()) {
-			// movimiento del tarro desde teclado
-			auto.actualizarMovimiento();        
+			// movimiento del auto desde teclado
+			auto.actualizarMovimiento();       
 			// caida de la lluvia 
-	       if (!lluvia.actualizarMovimiento(auto)) {
+	       if (!monedas.actualizarMovimiento(auto) || !obstaculos.actualizarMovimiento(auto)) {
 	    	  //actualizar HigherScore
 	    	  if (game.getHigherScore()<auto.getPuntos())
 	    		  game.setHigherScore(auto.getPuntos());  
@@ -81,7 +85,8 @@ public class GameScreen implements Screen {
 		}
 		
 		auto.dibujar(batch);
-		lluvia.actualizarDibujoLluvia(batch);
+		monedas.dibujar(batch);
+		obstaculos.dibujar(batch);
 		
 		batch.end();
 	}
@@ -92,8 +97,7 @@ public class GameScreen implements Screen {
 
 	@Override
 	public void show() {
-	  // continuar con sonido de lluvia
-	  lluvia.continuar();
+		monedas.continuar();
 	}
 
 	@Override
@@ -103,7 +107,7 @@ public class GameScreen implements Screen {
 
 	@Override
 	public void pause() {
-		lluvia.pausar();
+		monedas.pausar();
 		game.setScreen(new PausaScreen(game, this)); 
 	}
 
@@ -115,8 +119,7 @@ public class GameScreen implements Screen {
 	@Override
 	public void dispose() {
 		auto.destruir();
-      lluvia.destruir();
-
+		monedas.destruir();
+		obstaculos.destruir();
 	}
-
 }

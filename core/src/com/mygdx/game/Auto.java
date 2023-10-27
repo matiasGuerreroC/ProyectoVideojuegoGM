@@ -10,7 +10,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 
 public class Auto {
     private Sprite sprite;  // Agregamos un Sprite
-    private int vidas = 3;
+    private int vidas = 5;
     private int puntos = 0;
     private int velocidadX = 400;
     private boolean chocado = false;

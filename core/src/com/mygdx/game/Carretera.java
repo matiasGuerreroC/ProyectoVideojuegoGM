@@ -17,7 +17,7 @@ public class Carretera {
         y = 0;
         
         // Inicializa la velocidad de desplazamiento
-        velocidad = 10.0f;  // Puedes ajustar la velocidad a tu preferencia
+        velocidad = 15.0f;  // Puedes ajustar la velocidad a tu preferencia
     }
 
     public void render(SpriteBatch batch) {
