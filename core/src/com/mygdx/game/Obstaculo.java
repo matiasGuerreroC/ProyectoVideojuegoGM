@@ -9,7 +9,7 @@ import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.TimeUtils;
 
-public class Obstaculo extends ObjetoCarretera {
+public class Obstaculo extends ObjetoCarretera implements Colisionable {
     public Obstaculo(Texture textura, Sound sonido, Music musica) {
         super(textura, sonido, musica);
     }
@@ -49,7 +49,7 @@ public class Obstaculo extends ObjetoCarretera {
             	super.objetosPos.removeIndex(i);
             }
             
-            if(drop.overlaps(auto.getArea())) {
+            if(verificarColision(auto, drop)) {
             	auto.chocar();
             	
             	if(auto.getVidas() <= 0) {
@@ -79,4 +79,16 @@ public class Obstaculo extends ObjetoCarretera {
         sonido.dispose();
         textura.dispose();
      }
+
+	@Override
+	public boolean verificarColision(Auto auto, Rectangle objeto) {
+		// TODO Auto-generated method stub
+		
+		if(objeto.overlaps(auto.getArea()))
+		{
+			return true;
+		}
+		return false;
+		
+	}
 }
