@@ -10,13 +10,13 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class MainMenuScreen implements Screen {
 
-	final GameLluviaMenu game;
+	final GameMenu game;
 	private SpriteBatch batch;
 	private BitmapFont font;
 	private OrthographicCamera camera;
 	private Texture fondo;
 
-	public MainMenuScreen(final GameLluviaMenu game) {
+	public MainMenuScreen(final GameMenu game) {
 		this.game = game;
         this.batch = game.getBatch();
         this.font = game.getFont();

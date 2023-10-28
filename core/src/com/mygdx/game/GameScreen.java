@@ -10,7 +10,7 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class GameScreen implements Screen {
-	final GameLluviaMenu game;
+	final GameMenu game;
     private OrthographicCamera camera;
 	private SpriteBatch batch;   
 	private BitmapFont font;
@@ -22,7 +22,7 @@ public class GameScreen implements Screen {
 	   
 	//boolean activo = true;
 
-	public GameScreen(final GameLluviaMenu game) {
+	public GameScreen(final GameMenu game) {
 		this.game = game;
         this.batch = game.getBatch();
         this.font = game.getFont();
@@ -66,7 +66,7 @@ public class GameScreen implements Screen {
 		fondo.render(batch);
 		
 		//dibujar textos
-		font.draw(batch, "Gotas totales: " + auto.getPuntos(), 5, 595);
+		font.draw(batch, "Monedas totales: " + auto.getPuntos(), 5, 595);
 		font.draw(batch, "Vidas : " + auto.getVidas(), 670, 595);
 		font.draw(batch, "HighScore : " + game.getHigherScore(), camera.viewportWidth/2-50, 595);
 		
