@@ -1,6 +1,7 @@
 package com.mygdx.game;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
@@ -67,7 +68,13 @@ public class GameScreen implements Screen {
 		font.draw(batch, "Monedas totales: " + auto.getPuntos(), 5, 595);
 		font.draw(batch, "Vidas : " + auto.getVidas(), 670, 595);
 		font.draw(batch, "HighScore : " + game.getHigherScore(), camera.viewportWidth/2-50, 595);
+
+		// Si se toca la letra p, el juego se pausa
+		if(Gdx.input.isKeyJustPressed(Input.Keys.P)){
+			pause();
+		}
 		
+		// Se verifica que el auto no este chocado
 		if (!auto.estaChocado()) {
 			// Actualiza el movimiento del auto desde el teclado
 			auto.actualizarMovimiento();       
