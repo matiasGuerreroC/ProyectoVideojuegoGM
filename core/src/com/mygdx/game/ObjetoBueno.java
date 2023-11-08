@@ -9,51 +9,56 @@ import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.TimeUtils;
 
+// Esta clase representa un objeto bueno en la carretera, es subclase de ObjetoCarretera e implementa la interfaz Colisionable
 public class ObjetoBueno extends ObjetoCarretera implements Colisionable {
+
+    // Constructor que recibe una textura, un sonido y una música
     public ObjetoBueno(Texture textura, Sound sonido, Music musica) {
         super(textura, sonido, musica);
     }
 
+    // Método que se llama al inicio del juego
     @Override
     public void crear() {
         // Implementa lógica para crear objetos buenos en la carretera
-    	crearMonedas();
-    	
-    	musica.setLooping(true);
-    	musica.play();
+        crearMonedas();
+        
+        musica.setLooping(true);  // Configura la música para que se reproduzca en bucle
+        musica.play();  // Reproduce la música
     }
     
     private void crearMonedas() {
-    	Rectangle moneda = new Rectangle();
-    	moneda.x = MathUtils.random(0, 813-64);
-    	moneda.y = 600;
-    	moneda.width = 64;
-    	moneda.height = 64;
-    	objetosPos.add(moneda);
-    	
-    	super.lastDropTime = TimeUtils.nanoTime();
+        Rectangle moneda = new Rectangle();
+        moneda.x = MathUtils.random(0, 813 - 64);  // Genera una posición x aleatoria
+        moneda.y = 600;  // La moneda comienza desde la parte superior de la pantalla
+        moneda.width = 64;  // Tamaño de la moneda
+        moneda.height = 64;
+        objetosPos.add(moneda);  // Agrega la moneda al conjunto de objetos en la carretera
+        
+        super.lastDropTime = TimeUtils.nanoTime();  // Registra el tiempo de creación de la última moneda
     }
 
     @Override
     public boolean actualizarMovimiento(Auto auto) {
         // Implementa lógica para actualizar el movimiento de los objetos buenos en la carretera
-    	if(TimeUtils.nanoTime() - lastDropTime > 1000000000) crearMonedas();
-    	
-    	// Revisar si las monedas cayeron al suelo o chocaron con el auto
-        for (int i=0; i < objetosPos.size; i++ ) {
+        if (TimeUtils.nanoTime() - lastDropTime > 1000000000) crearMonedas();  // Crea monedas a intervalos regulares
+        
+        // Revisar si las monedas cayeron al suelo o chocaron con el auto
+        for (int i = 0; i < objetosPos.size; i++) {
             Rectangle coindrop = objetosPos.get(i);
-            coindrop.y -= 300 * Gdx.graphics.getDeltaTime();
-
-            // Revisar si la moneda cayo al suelo y se elimina
+            coindrop.y -= 300 * Gdx.graphics.getDeltaTime();  // Mueve las monedas hacia abajo a una velocidad constante
+            
+            // Revisar si la moneda cayó al suelo y se elimina
             if (coindrop.y + 64 < 0) {
-            	super.objetosPos.removeIndex(i);
+                super.objetosPos.removeIndex(i);
             }
             
-            if(verificarColision(auto, coindrop)) {
-            	auto.sumarPuntos(1);
-            	
-            	sonido.play();
-            	super.objetosPos.removeIndex(i);
+            // Revisar si hay colisión entre el auto y una moneda
+            if (verificarColision(auto, coindrop)) {
+                auto.sumarPuntos(1);  // Incrementa el puntaje del auto al recoger una moneda
+                
+                sonido.play();  // Reproduce el sonido de recolección de moneda
+                super.objetosPos.removeIndex(i);  // Elimina la moneda
             }
         }
 
@@ -63,38 +68,34 @@ public class ObjetoBueno extends ObjetoCarretera implements Colisionable {
     @Override
     public void dibujar(SpriteBatch batch) {
         // Implementa la lógica para dibujar objetos buenos en la carretera
-    	for(int i=0; i < super.objetosPos.size; i++) {
-    		Rectangle moneda = super.objetosPos.get(i);
-    		
-    		batch.draw(textura, moneda.x, moneda.y);
-    	}
+        for (int i = 0; i < super.objetosPos.size; i++) {
+            Rectangle moneda = super.objetosPos.get(i);
+            
+            batch.draw(textura, moneda.x, moneda.y);  // Dibuja la textura de la moneda en su posición
+        }
     }
     
     @Override
     public void destruir() {
-        sonido.dispose();
-        musica.dispose();
-        textura.dispose();
+        sonido.dispose();  // Libera los recursos del sonido
+        musica.dispose();  // Libera los recursos de la música
+        textura.dispose();  // Libera los recursos de la textura
      }
     
     public void pausar() {
-    	musica.stop();
+        musica.stop();  // Pausa la reproducción de la música
     }
     
     public void continuar() {
-    	musica.play();
-	}
+        musica.play();  // Continúa la reproducción de la música
+    }
 
-	@Override
-	public boolean verificarColision(Auto auto, Rectangle objeto) {
-		// TODO Auto-generated method stub
-		
-		if(objeto.overlaps(auto.getArea()))
-		{
-			return true;
-		}
-		return false;
-	}
-
-	
+    @Override
+    public boolean verificarColision(Auto auto, Rectangle objeto) {
+        // Verifica si hay colisión entre el auto y un objeto rectangular (en este caso, una moneda)
+        if (objeto.overlaps(auto.getArea())) {
+            return true;  // Retorna verdadero si hay colisión
+        }
+        return false;  // Retorna falso si no hay colisión
+    }
 }

@@ -3,21 +3,21 @@ package com.mygdx.game;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
-
+// Esta clase representa la carretera del juego.
 public class Carretera {
-	private Texture carretera;
-	private float y;  // Posición vertical de la textura del fondo
-    private float velocidad;  // Velocidad de desplazamiento de la carretera
+    private Texture carretera;  // Textura de la carretera
+    private float y;            // Posición vertical de la textura del fondo
+    private float velocidad;     // Velocidad de desplazamiento de la carretera
 
     public Carretera() {
-        // Carga la textura de la carretera
+        // Carga la textura de la carretera desde un archivo de imagen
         carretera = new Texture("carretera.png");
 
-        // Inicializa la posición vertical de la carretera
+        // Inicializa la posición vertical de la carretera en la parte superior de la pantalla
         y = 0;
         
-        // Inicializa la velocidad de desplazamiento
-        velocidad = 15.0f;  // Puedes ajustar la velocidad a tu preferencia
+        // Inicializa la velocidad de desplazamiento de la carretera
+        velocidad = 15.0f;  // Puedes ajustar la velocidad según tus preferencias
     }
 
     public void render(SpriteBatch batch) {
@@ -28,9 +28,11 @@ public class Carretera {
         batch.draw(carretera, 0, y + carretera.getHeight());
 
         // Ajusta la posición vertical para simular el movimiento de la carretera
-        y -= velocidad;  // Puedes ajustar la velocidad de desplazamiento cambiando el valor 1
+        y -= velocidad;  // Puedes ajustar la velocidad de desplazamiento cambiando el valor 15
+
+        // Cuando la textura de la carretera se desplaza completamente fuera de la pantalla, se reinicia su posición vertical
         if (y <= -carretera.getHeight()) {
-            y = 0;  // Reinicia la posición vertical cuando la textura ha salido completamente de la pantalla
+            y = 0;
         }
     }
 
