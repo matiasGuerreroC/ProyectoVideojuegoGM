@@ -7,7 +7,8 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 // Esta clase representa el punto de entrada y el controlador principal del juego.
 public class GameMenu extends Game {
 
-    private SpriteBatch batch;  // Utilizado para dibujar gráficos en la pantalla.
+    private static GameMenu instance; // La única instancia de GameMenu
+	private SpriteBatch batch;  // Utilizado para dibujar gráficos en la pantalla.
     private BitmapFont font;    // Utilizado para mostrar texto en la pantalla.
     private int higherScore;    // Almacena la puntuación más alta del juego.
 
@@ -16,6 +17,14 @@ public class GameMenu extends Game {
         batch = new SpriteBatch();  // Inicializa el SpriteBatch para dibujar gráficos.
         font = new BitmapFont();    // Inicializa el BitmapFont para mostrar texto.
         this.setScreen(new MainMenuScreen(this));  // Establece la pantalla principal del juego.
+    }
+    
+    public static GameMenu getInstance() {
+    	// Método estático para obtener la instancia única de GameMenu
+    	if(instance == null) {
+    		instance = new GameMenu();
+    	}
+    	return instance;
     }
 
     // Este método se llama en cada cuadro del juego.

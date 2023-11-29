@@ -13,7 +13,6 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 // Esta clase representa la pantalla principal del juego.
 public class GameScreen implements Screen {
 	// Atributos privados de la clase
-	final GameMenu game;
     private OrthographicCamera camera;
 	private SpriteBatch batch;   
 	private BitmapFont font;
@@ -21,6 +20,8 @@ public class GameScreen implements Screen {
 	private ObjetoBueno monedas;
 	private Obstaculo obstaculos;
 	private Carretera fondo;
+	
+	GameMenu game = GameMenu.getInstance();
 
 	// Constructor que recibe una instancia de GameMenu
 	public GameScreen(final GameMenu game) {

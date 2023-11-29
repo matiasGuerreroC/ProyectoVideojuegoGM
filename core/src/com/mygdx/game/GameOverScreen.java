@@ -9,11 +9,13 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 // Esta clase representa la pantalla de Game Over del juego.
 public class GameOverScreen implements Screen {
-    private final GameMenu game;
+    
     private SpriteBatch batch;
     private BitmapFont font;
     private OrthographicCamera camera;
     private Texture fondo;
+    
+    GameMenu game = GameMenu.getInstance();
 
     // Constructor que recibe la instancia de GameMenu
     public GameOverScreen(final GameMenu game) {

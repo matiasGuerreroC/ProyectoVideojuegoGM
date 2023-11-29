@@ -10,11 +10,12 @@ import com.badlogic.gdx.utils.ScreenUtils;
 // Esta clase representa la pantalla de pausa del juego.
 public class PausaScreen implements Screen {
 
-    private final GameMenu game;
     private GameScreen juego;  // Referencia a la instancia de GameScreen
     private SpriteBatch batch;
     private BitmapFont font;
     private OrthographicCamera camera;
+    
+    GameMenu game = GameMenu.getInstance();
 
     // Constructor que recibe la instancia de GameMenu y la instancia de GameScreen
     public PausaScreen(final GameMenu game, GameScreen juego) {
