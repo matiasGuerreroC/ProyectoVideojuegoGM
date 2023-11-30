@@ -78,7 +78,7 @@ public class GameScreen implements Screen {
 		// Se verifica que el auto no este chocado
 		if (!auto.estaChocado()) {
 			// Actualiza el movimiento del auto desde el teclado
-			auto.actualizarMovimiento();       
+			auto.actualizarMovimiento(auto);       
 			
 			// Controla la caída de las monedas y los obstáculos
 			if (!monedas.actualizarMovimiento(auto) || !obstaculos.actualizarMovimiento(auto)) {

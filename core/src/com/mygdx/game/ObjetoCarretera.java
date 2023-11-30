@@ -16,14 +16,20 @@ public abstract class ObjetoCarretera {
     protected Music musica;                // Música relacionada con los objetos
     protected long lastDropTime;           // Tiempo del último objeto creado
 
-    public ObjetoCarretera(Texture textura, Sound sonido, Music musica) {
-    	this.sonido = sonido;
-    	this.musica = musica;
-    	this.textura = textura;
+    public ObjetoCarretera() {
     	
     	objetosPos = new Array<Rectangle>();  // Inicializa el arreglo de posiciones de objetos
 		objetosTipo = new Array<Integer>();   // Inicializa el arreglo de tipos de objetos
     }
+    //revisar
+    public void templateMethod(Auto auto, SpriteBatch batch) {
+        crear();
+        while (actualizarMovimiento(auto)) {
+            dibujar(batch);
+        }
+        destruir();
+    }
+    
 
     public void crear() {
         // Agrega lógica para crear objetos en la carretera

@@ -11,10 +11,16 @@ import com.badlogic.gdx.utils.TimeUtils;
 
 // Esta clase representa un objeto bueno en la carretera, es subclase de ObjetoCarretera e implementa la interfaz Colisionable
 public class ObjetoBueno extends ObjetoCarretera implements Colisionable {
+	protected Texture textura;             // Textura utilizada para representar los objetos
+    protected Sound sonido;                // Sonido relacionado con los objetos
+    protected Music musica;
 
     // Constructor que recibe una textura, un sonido y una música
     public ObjetoBueno(Texture textura, Sound sonido, Music musica) {
-        super(textura, sonido, musica);
+        super();
+        this.textura = textura; 
+        this.sonido = sonido; 
+        this.musica = musica; 
     }
 
     // Método que se llama al inicio del juego

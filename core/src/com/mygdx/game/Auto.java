@@ -1,6 +1,8 @@
 package com.mygdx.game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.MathUtils;
@@ -8,7 +10,7 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 
 // Esta clase representa al auto en el juego
-public class Auto {
+public class Auto extends ObjetoCarretera {
     private Sprite sprite; // Un objeto Sprite para representar al auto en el juego
     private int vidas = 5; // Cantidad de vidas iniciales
     private int puntos = 0; // Puntuación del jugador
@@ -20,9 +22,11 @@ public class Auto {
 
     public Auto(Texture recto) {
         // Inicializamos el Sprite con la textura
+    	super(); 
         sprite = new Sprite(recto);
         sprite.setSize(64, 102); // Establecemos el tamaño del sprite
         sprite.setOriginCenter(); // Establecemos el centro del sprite como origen
+        
     }
 
     // Getters
@@ -72,7 +76,7 @@ public class Auto {
     }
 
     // Método para actualizar el movimiento del auto (desde el teclado)
-    public void actualizarMovimiento() {
+    public boolean actualizarMovimiento(Auto auto) {
         // Obtenemos el tiempo transcurrido desde la última actualización
         float deltaTime = Gdx.graphics.getDeltaTime();
 
@@ -90,6 +94,7 @@ public class Auto {
         // Limitamos el movimiento del auto para que no salga de los límites de la pantalla
         if (sprite.getX() < 0) sprite.setX(0);
         if (sprite.getX() > 800 - sprite.getWidth()) sprite.setX(800 - sprite.getWidth());
+        return true; 
     }
 
     // Método para destruir el auto

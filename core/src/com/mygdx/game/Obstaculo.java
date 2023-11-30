@@ -11,8 +11,15 @@ import com.badlogic.gdx.utils.TimeUtils;
 
 // Esta clase representa un obstáculo en la carretera, que es subclase de ObjetoCarretera e implementa la interfaz Colisionable
 public class Obstaculo extends ObjetoCarretera implements Colisionable {
+	protected Texture textura;             // Textura utilizada para representar los objetos
+    protected Sound sonido;                // Sonido relacionado con los objetos
+    protected Music musica;
+    
     public Obstaculo(Texture textura, Sound sonido, Music musica) {
-        super(textura, sonido, musica);
+        super();
+        this.textura = textura; 
+        this.sonido = sonido; 
+        this.musica = musica; 
     }
 
     @Override
