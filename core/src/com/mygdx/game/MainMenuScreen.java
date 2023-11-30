@@ -19,6 +19,9 @@ public class MainMenuScreen implements Screen {
     private GameDesignFactory selectedFactory;
     private boolean flag = false;
     
+    private boolean showLine = true; // Variable para alternar la visibilidad de la línea
+    private float blinkTimer = 0f; // Temporizador para el parpadeo
+    
     GameMenu game = GameMenu.getInstance();
 
     // Constructor que recibe una instancia de GameMenu
@@ -51,7 +54,21 @@ public class MainMenuScreen implements Screen {
         font.draw(batch, "Diseño del juego:", 550, camera.viewportHeight / 2 - 125);
         font.draw(batch, "1. Diseño Original", 550, camera.viewportHeight / 2 - 150);
         font.draw(batch, "2. Diseño Alternativo", 550, camera.viewportHeight / 2 - 175);
-        font.draw(batch, "Seleccione el numero por teclado!", 550, camera.viewportHeight/2-200);
+        
+        // Actualiza el temporizador
+        blinkTimer += delta;
+
+        // Cambia la visibilidad de la línea cada 0.5 segundos (o el valor que desees)
+        if (blinkTimer >= 0.4f) {
+            showLine = !showLine;
+            blinkTimer = 0f; // Reinicia el temporizador
+        }
+        
+        // Dibuja la línea solo si showLine es true
+        if (showLine) {
+            font.getData().setScale(1, 2);
+            font.draw(batch, "!!Presione 1 o 2 para Iniciar Juego!!", 550, camera.viewportHeight/2-200);
+        }
         
         batch.end();    // Finaliza el dibujo
         
