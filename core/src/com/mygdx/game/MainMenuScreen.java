@@ -17,6 +17,7 @@ public class MainMenuScreen implements Screen {
     private OrthographicCamera camera;
     private Texture fondo;
     private GameDesignFactory selectedFactory;
+    private boolean flag = false;
     
     GameMenu game = GameMenu.getInstance();
 
@@ -34,6 +35,7 @@ public class MainMenuScreen implements Screen {
     // Método que se llama en cada cuadro para renderizar la pantalla
     @Override
     public void render(float delta) {
+    	
         camera.update();   // Actualiza la cámara
 
         batch.setProjectionMatrix(camera.combined);   // Configura la matriz de proyección del SpriteBatch
@@ -56,12 +58,14 @@ public class MainMenuScreen implements Screen {
         if (Gdx.input.isKeyJustPressed(Input.Keys.NUM_1)) {
             // Selecciona la fábrica por defecto
             selectedFactory = new OriginalDesign();
+            flag = true;
         } else if (Gdx.input.isKeyJustPressed(Input.Keys.NUM_2)) {
             // Selecciona la fábrica alternativa
             selectedFactory = new AlternativeDesign();
+            flag = true;
         }
 
-        if (Gdx.input.isKeyJustPressed(Input.Keys.ANY_KEY)) {
+        if (Gdx.input.isKeyJustPressed(Input.Keys.ANY_KEY) && flag) {
             // Comienza el juego con la fábrica seleccionada
             game.setScreen(new GameScreen(game, selectedFactory));
             dispose();
