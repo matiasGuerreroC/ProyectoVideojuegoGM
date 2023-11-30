@@ -16,7 +16,8 @@ public class Obstaculo extends ObjetoCarretera implements Colisionable {
     protected Sound sonido;                // Sonido relacionado con los objetos
     protected Music musica;
     protected int tipo;
-    
+    private EstrategiaVelocidad estrategiaCono;
+    private EstrategiaVelocidad estrategiaAceite;
     
     public Obstaculo(Texture texturaCono, Texture texturaCharcoAceite, Sound sonido, Music musica, int tipo) {
         super();
@@ -25,6 +26,8 @@ public class Obstaculo extends ObjetoCarretera implements Colisionable {
         this.sonido = sonido; 
         this.musica = musica; 
         this.tipo = tipo;
+        this.estrategiaCono = new EstrategiaCono();
+        this.estrategiaAceite = new EstrategiaAceite();
     }
 
     @Override
@@ -43,17 +46,17 @@ public class Obstaculo extends ObjetoCarretera implements Colisionable {
         obstaculo.width = 64;
         obstaculo.height = 75;
 
-        // Asigna un tipo de obstáculo aleatorio (0 para cono, 1 para charco de aceite)
-        objetosTipo.add(MathUtils.random(1));
+        // Asigna un tipo específico al obstáculo (0 para cono, 1 para charco de aceite)
+        int tipoObstaculo = MathUtils.random(1);
+        objetosTipo.add(tipoObstaculo);
 
         objetosPos.add(obstaculo);
 
         super.lastDropTime = TimeUtils.nanoTime();
     }
-    
 
     @Override
-    public boolean actualizarMovimiento(Auto auto) {
+    public boolean actualizarMovimiento(Auto auto, Carretera carretera) {
         // Implementa lógica para actualizar el movimiento de los obstáculos en la carretera
         if (TimeUtils.nanoTime() - lastDropTime > 400000000)
             crearObstaculos();
@@ -63,12 +66,17 @@ public class Obstaculo extends ObjetoCarretera implements Colisionable {
             Rectangle drop = objetosPos.get(i);
             drop.y -= 400 * Gdx.graphics.getDeltaTime();
             
-            // Revisar si el obstáculo cayó al suelo y se elimina
-            if (drop.y + 64 < 0) {
-                super.objetosPos.removeIndex(i);
-            }
-            
             if (verificarColision(auto, drop)) {
+            	
+            	if(objetosTipo.get(i) == 0) {
+            		
+            		estrategiaCono.aplicarEfecto(carretera);
+            	}
+            	else if(objetosTipo.get(i) == 1) {
+            		
+            		estrategiaAceite.aplicarEfecto(carretera);
+            	}
+            	
                 auto.chocar();
                 
                 if (auto.getVidas() <= 0) {
@@ -77,6 +85,7 @@ public class Obstaculo extends ObjetoCarretera implements Colisionable {
                 
                 sonido.play();  // Reproducir el sonido de colisión
                 super.objetosPos.removeIndex(i);
+                super.objetosTipo.removeIndex(i);
             }
         }
         
@@ -110,7 +119,6 @@ public class Obstaculo extends ObjetoCarretera implements Colisionable {
     @Override
     public void destruir() {
         sonido.dispose();  // Libera los recursos del sonido
-        textura.dispose(); // Libera los recursos de la textura
      }
 
     @Override

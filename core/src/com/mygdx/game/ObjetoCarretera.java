@@ -22,9 +22,9 @@ public abstract class ObjetoCarretera {
 		objetosTipo = new Array<Integer>();   // Inicializa el arreglo de tipos de objetos
     }
     //revisar
-    public void templateMethod(Auto auto, SpriteBatch batch) {
+    public void templateMethod(Auto auto, SpriteBatch batch, Carretera carretera) {
         crear();
-        while (actualizarMovimiento(auto)) {
+        while (actualizarMovimiento(auto, carretera)) {
             dibujar(batch);
         }
         destruir();
@@ -35,7 +35,7 @@ public abstract class ObjetoCarretera {
         // Agrega lógica para crear objetos en la carretera
     }
 
-    public abstract boolean actualizarMovimiento(Auto auto);
+    public abstract boolean actualizarMovimiento(Auto auto, Carretera carretera);
 
     public void dibujar(SpriteBatch batch) {
         // Dibuja los objetos en la carretera

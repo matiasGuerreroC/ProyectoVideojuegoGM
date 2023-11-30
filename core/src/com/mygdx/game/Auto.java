@@ -76,7 +76,7 @@ public class Auto extends ObjetoCarretera {
     }
 
     // Método para actualizar el movimiento del auto (desde el teclado)
-    public boolean actualizarMovimiento(Auto auto) {
+    public boolean actualizarMovimiento(Auto auto, Carretera carretera) {
         // Obtenemos el tiempo transcurrido desde la última actualización
         float deltaTime = Gdx.graphics.getDeltaTime();
 

@@ -45,7 +45,7 @@ public class ObjetoBueno extends ObjetoCarretera implements Colisionable {
     }
 
     @Override
-    public boolean actualizarMovimiento(Auto auto) {
+    public boolean actualizarMovimiento(Auto auto, Carretera carretera) {
         // Implementa lógica para actualizar el movimiento de los objetos buenos en la carretera
         if (TimeUtils.nanoTime() - lastDropTime > 1000000000) crearMonedas();  // Crea monedas a intervalos regulares
         
