@@ -19,6 +19,6 @@ public class DesktopLauncher {
         config.setWindowedMode(1600, 960);  // Establece el modo de ventana con resolución 1600x960 píxeles.
 
         // Crea una instancia de la aplicación de escritorio y la inicia con la clase GameMenu y la configuración especificada.
-        new Lwjgl3Application(new GameMenu(), config);
+        new Lwjgl3Application(GameMenu.getInstance(), config);
     }
 }
