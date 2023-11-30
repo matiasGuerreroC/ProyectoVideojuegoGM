@@ -16,33 +16,27 @@ public class GameScreen implements Screen {
     private OrthographicCamera camera;
 	private SpriteBatch batch;   
 	private BitmapFont font;
-	private Auto auto;
-	private ObjetoBueno monedas;
-	private Obstaculo obstaculos;
+	private ObjetoCarretera auto;
+	private ObjetoCarretera monedas;
+	private ObjetoCarretera obstaculos;
 	private Carretera fondo;
+	private GameDesignFactory diseñoJuego;
 	
 	GameMenu game = GameMenu.getInstance();
 
 	// Constructor que recibe una instancia de GameMenu
-	public GameScreen(final GameMenu game) {
+	public GameScreen(final GameMenu game, GameDesignFactory diseñoJuego) {
 		this.game = game;
         this.batch = game.getBatch();  // Obtiene el SpriteBatch de GameMenu
         this.font = game.getFont();    // Obtiene el BitmapFont de GameMenu
+        this.diseñoJuego = diseñoJuego;
 
         fondo = new Carretera();  // Crea una instancia de Carretera
 
-        auto = new Auto(new Texture(Gdx.files.internal("auto.png")));  // Crea una instancia de Auto con una textura
-
-        Texture moneda = new Texture(Gdx.files.internal("coin.png"));
-        Texture cono = new Texture(Gdx.files.internal("cono.png"));
-        Texture charcoAceite = new Texture(Gdx.files.internal("aceite.png"));
-         
-		Sound coinSound = Gdx.audio.newSound(Gdx.files.internal("collect_coin.mp3"));
-		Sound crashSound = Gdx.audio.newSound(Gdx.files.internal("crash.mp3"));
-		Music carMusic = Gdx.audio.newMusic(Gdx.files.internal("car_acceleration.mp3"));
+        auto = diseñoJuego.crearAuto();
 		 
-		monedas = new ObjetoBueno(moneda, coinSound, carMusic);  // Crea una instancia de ObjetoBueno (Monedas)
-		obstaculos = new Obstaculo(cono, charcoAceite, crashSound, carMusic, 0);  // Crea una instancia de Obstaculo (Conos)
+		monedas = diseñoJuego.crearObjetoBueno();
+		obstaculos = diseñoJuego.crearObstaculo();
 		  
 		// Configuración de la cámara ortográfica
 		camera = new OrthographicCamera();
@@ -57,6 +51,9 @@ public class GameScreen implements Screen {
 
 	@Override
 	public void render(float delta) {
+		
+		Auto autoActual = (Auto) auto;
+		
 		// Actualiza las matrices de la cámara
 		camera.update();
 		
@@ -79,10 +76,10 @@ public class GameScreen implements Screen {
 		// Se verifica que el auto no este chocado
 		if (!auto.estaChocado()) {
 			// Actualiza el movimiento del auto desde el teclado
-			auto.actualizarMovimiento(auto, fondo);       
+			auto.actualizarMovimiento(autoActual, fondo);       
 			
 			// Controla la caída de las monedas y los obstáculos
-			if (!monedas.actualizarMovimiento(auto, fondo) || !obstaculos.actualizarMovimiento(auto, fondo)) {
+			if (!monedas.actualizarMovimiento(autoActual, fondo) || !obstaculos.actualizarMovimiento(autoActual, fondo)) {
 				// Actualiza el puntaje más alto si es necesario
 				if (game.getHigherScore() < auto.getPuntos())
 					game.setHigherScore(auto.getPuntos());  

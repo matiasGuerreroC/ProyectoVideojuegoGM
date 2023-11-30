@@ -106,4 +106,16 @@ public class Auto extends ObjetoCarretera {
     public boolean estaChocado() {
         return chocado; // Regresamos el valor de la bandera chocado
     }
+
+	@Override
+	protected void continuar() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	protected void pausar() {
+		// TODO Auto-generated method stub
+		
+	}
 }

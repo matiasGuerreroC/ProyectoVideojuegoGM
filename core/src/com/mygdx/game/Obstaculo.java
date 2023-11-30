@@ -129,4 +129,34 @@ public class Obstaculo extends ObjetoCarretera implements Colisionable {
         }
         return false;  // No hay colisión
     }
+
+	@Override
+	public int getVidas() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public int getPuntos() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	protected boolean estaChocado() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	protected void continuar() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	protected void pausar() {
+		// TODO Auto-generated method stub
+		
+	}
 }

@@ -36,7 +36,7 @@ public abstract class ObjetoCarretera {
     }
 
     public abstract boolean actualizarMovimiento(Auto auto, Carretera carretera);
-
+    
     public void dibujar(SpriteBatch batch) {
         // Dibuja los objetos en la carretera
         for (Rectangle objeto : objetosPos) {
@@ -47,4 +47,11 @@ public abstract class ObjetoCarretera {
     public void destruir() {
         textura.dispose();  // Libera los recursos de la textura
     }
+    
+    // Metodos Abstractos
+    public abstract int getVidas();
+    public abstract int getPuntos();
+	protected abstract boolean estaChocado();
+	protected abstract void continuar();
+	protected abstract void pausar();
 }

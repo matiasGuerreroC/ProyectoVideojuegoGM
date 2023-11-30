@@ -104,4 +104,22 @@ public class ObjetoBueno extends ObjetoCarretera implements Colisionable {
         }
         return false;  // Retorna falso si no hay colisión
     }
+
+	@Override
+	public int getVidas() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public int getPuntos() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	protected boolean estaChocado() {
+		// TODO Auto-generated method stub
+		return false;
+	}
 }

@@ -1,11 +1,13 @@
 package com.mygdx.game;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Rectangle;
 
 // Esta clase representa la pantalla principal del juego.
 public class MainMenuScreen implements Screen {
@@ -14,6 +16,7 @@ public class MainMenuScreen implements Screen {
     private BitmapFont font;
     private OrthographicCamera camera;
     private Texture fondo;
+    private GameDesignFactory selectedFactory;
     
     GameMenu game = GameMenu.getInstance();
 
@@ -43,14 +46,25 @@ public class MainMenuScreen implements Screen {
         font.getData().setScale(3, 3);   // Establece el tamaño de la fuente
         font.draw(batch, "Bienvenido a Highway Havoc!!! ", 100, camera.viewportHeight/2+200);   // Dibuja el texto
         font.getData().setScale(1, 1);   // Restaura el tamaño de la fuente
-        font.draw(batch, "Toca en cualquier lugar para comenzar!", 280, camera.viewportHeight/2-200);   // Dibuja otro texto
-
+        font.draw(batch, "Diseño del juego:", 550, camera.viewportHeight / 2 - 125);
+        font.draw(batch, "1. Diseño Original", 550, camera.viewportHeight / 2 - 150);
+        font.draw(batch, "2. Diseño Alternativo", 550, camera.viewportHeight / 2 - 175);
+        font.draw(batch, "Seleccione el numero por teclado!", 550, camera.viewportHeight/2-200);
+        
         batch.end();    // Finaliza el dibujo
+        
+        if (Gdx.input.isKeyJustPressed(Input.Keys.NUM_1)) {
+            // Selecciona la fábrica por defecto
+            selectedFactory = new OriginalDesign();
+        } else if (Gdx.input.isKeyJustPressed(Input.Keys.NUM_2)) {
+            // Selecciona la fábrica alternativa
+            selectedFactory = new AlternativeDesign();
+        }
 
-        // Verifica si se ha tocado la pantalla
-        if (Gdx.input.isTouched()) {
-            game.setScreen(new GameScreen(game));   // Cambia a la pantalla de juego
-            dispose();   // Libera los recursos de esta pantalla
+        if (Gdx.input.isKeyJustPressed(Input.Keys.ANY_KEY)) {
+            // Comienza el juego con la fábrica seleccionada
+            game.setScreen(new GameScreen(game, selectedFactory));
+            dispose();
         }
     }
 

@@ -52,7 +52,7 @@ public class GameOverScreen implements Screen {
 
         if (Gdx.input.isTouched()) {
             // Cuando se toca la pantalla, se inicia una nueva instancia de GameScreen
-            game.setScreen(new GameScreen(game));
+            game.setScreen(new GameScreen(game, new OriginalDesign()));
             dispose();
         }
     }
