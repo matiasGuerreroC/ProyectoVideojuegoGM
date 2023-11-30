@@ -11,15 +11,20 @@ import com.badlogic.gdx.utils.TimeUtils;
 
 // Esta clase representa un obstáculo en la carretera, que es subclase de ObjetoCarretera e implementa la interfaz Colisionable
 public class Obstaculo extends ObjetoCarretera implements Colisionable {
-	protected Texture textura;             // Textura utilizada para representar los objetos
+	protected Texture texturaCono;             // Textura utilizada para representar los conos
+	protected Texture texturaCharcoAceite;
     protected Sound sonido;                // Sonido relacionado con los objetos
     protected Music musica;
+    protected int tipo;
     
-    public Obstaculo(Texture textura, Sound sonido, Music musica) {
+    
+    public Obstaculo(Texture texturaCono, Texture texturaCharcoAceite, Sound sonido, Music musica, int tipo) {
         super();
-        this.textura = textura; 
+        this.texturaCono = texturaCono; 
+        this.texturaCharcoAceite = texturaCharcoAceite;
         this.sonido = sonido; 
         this.musica = musica; 
+        this.tipo = tipo;
     }
 
     @Override
@@ -37,10 +42,15 @@ public class Obstaculo extends ObjetoCarretera implements Colisionable {
         obstaculo.y = 600;
         obstaculo.width = 64;
         obstaculo.height = 75;
+
+        // Asigna un tipo de obstáculo aleatorio (0 para cono, 1 para charco de aceite)
+        objetosTipo.add(MathUtils.random(1));
+
         objetosPos.add(obstaculo);
-        
+
         super.lastDropTime = TimeUtils.nanoTime();
     }
+    
 
     @Override
     public boolean actualizarMovimiento(Auto auto) {
@@ -75,11 +85,25 @@ public class Obstaculo extends ObjetoCarretera implements Colisionable {
 
     @Override
     public void dibujar(SpriteBatch batch) {
-        // Implementa la lógica para dibujar obstáculos en la carretera
         for (int i = 0; i < super.objetosPos.size; i++) {
             Rectangle obstaculo = super.objetosPos.get(i);
-            
-            batch.draw(textura, obstaculo.x, obstaculo.y);  // Dibujar la textura del obstáculo en su posición
+            int tipoObstaculo = objetosTipo.get(i);
+
+            // Utiliza la textura correspondiente al tipo de obstáculo
+            Texture texturaObstaculo = obtenerTexturaSegunTipo(tipoObstaculo);
+            batch.draw(texturaObstaculo, obstaculo.x, obstaculo.y);
+        }
+    }
+    
+    // Método para obtener la textura según el tipo de obstáculo
+    private Texture obtenerTexturaSegunTipo(int tipoObstaculo) {
+        switch (tipoObstaculo) {
+            case 0:
+                return texturaCono; // Debes tener una textura para el cono
+            case 1:
+                return texturaCharcoAceite; // Debes tener una textura para el charco de aceite
+            default:
+                throw new IllegalArgumentException("Tipo de obstáculo no reconocido: " + tipoObstaculo);
         }
     }
     

@@ -8,6 +8,13 @@ public class Carretera {
     private Texture carretera;  // Textura de la carretera
     private float y;            // Posición vertical de la textura del fondo
     private float velocidad;     // Velocidad de desplazamiento de la carretera
+    private boolean reduccionActiva;
+    private float duracionReduccion;
+    private float tiempoRestanteReduccion;
+    private boolean aumentoActivo;
+    private float duracionAumento;
+    private float tiempoRestanteAumento;
+    
 
     public Carretera() {
         // Carga la textura de la carretera desde un archivo de imagen
@@ -18,6 +25,15 @@ public class Carretera {
         
         // Inicializa la velocidad de desplazamiento de la carretera
         velocidad = 15.0f;  // Puedes ajustar la velocidad según tus preferencias
+    }
+    
+    public float getVelocidad(){
+    	return velocidad;
+    }
+    
+    public void setVelocidad(float velocidad) {
+    	this.velocidad = velocidad;
+    	
     }
 
     public void render(SpriteBatch batch) {
@@ -39,5 +55,56 @@ public class Carretera {
     public void dispose() {
         // Libera los recursos al cerrar el juego
         carretera.dispose();
+    }
+    
+    public void reducirVelocidadPorTiempo(float duracion) {
+        if (!reduccionActiva) {
+            this.duracionReduccion = duracion;
+            this.tiempoRestanteReduccion = duracion;
+            this.reduccionActiva = true;
+        }
+    }
+
+    public void actualizarDisminuir(float delta) {
+        if (reduccionActiva) {
+            // Reducir la velocidad durante la duración establecida
+            velocidad *= 0.5f; // Por ejemplo, reducir a la mitad
+
+            tiempoRestanteReduccion -= delta;
+            if (tiempoRestanteReduccion <= 0) {
+                // Restaurar la velocidad original
+                velocidad *= 2.0f; // Por ejemplo, aumentar al doble
+
+                reduccionActiva = false;
+                duracionReduccion = 0;
+                tiempoRestanteReduccion = 0;
+            }
+        }
+    }
+    
+    public void aumentarVelocidadPorTiempo(float duracion) {
+        if (!aumentoActivo) {
+            this.duracionAumento = duracion;
+            this.tiempoRestanteAumento = duracion;
+            this.aumentoActivo = true;
+        }
+    }
+    
+
+    public void actualizarAumento(float delta) {
+        if (aumentoActivo) {
+            // Aumentar la velocidad durante la duración establecida
+            velocidad *= 2.0f; // Por ejemplo, aumentar al doble
+
+            tiempoRestanteAumento -= delta;
+            if (tiempoRestanteAumento <= 0) {
+                // Restaurar la velocidad original
+                velocidad *= 0.5f; // Por ejemplo, reducir a la mitad
+
+                aumentoActivo = false;
+                duracionAumento = 0;
+                tiempoRestanteAumento = 0;
+            }
+        }
     }
 }

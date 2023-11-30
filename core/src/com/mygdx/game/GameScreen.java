@@ -35,13 +35,14 @@ public class GameScreen implements Screen {
 
         Texture moneda = new Texture(Gdx.files.internal("coin.png"));
         Texture cono = new Texture(Gdx.files.internal("cono.png"));
+        Texture charcoAceite = new Texture(Gdx.files.internal("aceite.png"));
          
 		Sound coinSound = Gdx.audio.newSound(Gdx.files.internal("collect_coin.mp3"));
 		Sound crashSound = Gdx.audio.newSound(Gdx.files.internal("crash.mp3"));
 		Music carMusic = Gdx.audio.newMusic(Gdx.files.internal("car_acceleration.mp3"));
 		 
 		monedas = new ObjetoBueno(moneda, coinSound, carMusic);  // Crea una instancia de ObjetoBueno (Monedas)
-		obstaculos = new Obstaculo(cono, crashSound, carMusic);  // Crea una instancia de Obstaculo (Conos)
+		obstaculos = new Obstaculo(cono, charcoAceite, crashSound, carMusic, 0);  // Crea una instancia de Obstaculo (Conos)
 		  
 		// Configuración de la cámara ortográfica
 		camera = new OrthographicCamera();
