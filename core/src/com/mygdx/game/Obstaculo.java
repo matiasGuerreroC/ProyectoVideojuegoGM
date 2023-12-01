@@ -10,7 +10,7 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.TimeUtils;
 
 // Esta clase representa un obstáculo en la carretera, que es subclase de ObjetoCarretera e implementa la interfaz Colisionable
-public class Obstaculo extends ObjetoCarretera implements Colisionable {
+public class Obstaculo extends ObjetoCarretera {
 	protected Texture texturaCono;             // Textura utilizada para representar los conos
 	protected Texture texturaCharcoAceite;
     protected Sound sonido;                // Sonido relacionado con los objetos
@@ -120,15 +120,6 @@ public class Obstaculo extends ObjetoCarretera implements Colisionable {
     public void destruir() {
         sonido.dispose();  // Libera los recursos del sonido
      }
-
-    @Override
-    public boolean verificarColision(Auto auto, Rectangle objeto) {
-        // Método para verificar la colisión entre el auto y un objeto
-        if (objeto.overlaps(auto.getArea())) {
-            return true;  // Hay colisión
-        }
-        return false;  // No hay colisión
-    }
 
 	@Override
 	public int getVidas() {

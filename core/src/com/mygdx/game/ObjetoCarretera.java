@@ -8,7 +8,7 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.Array;
 
 // Clase abstracta que representa un objeto en la carretera
-public abstract class ObjetoCarretera {
+public abstract class ObjetoCarretera implements Colisionable {
     protected Array<Rectangle> objetosPos;  // Almacena las posiciones de los objetos en la carretera
     protected Array<Integer> objetosTipo;   // Almacena los tipos de objetos en la carretera
     protected Texture textura;             // Textura utilizada para representar los objetos
@@ -21,6 +21,7 @@ public abstract class ObjetoCarretera {
     	objetosPos = new Array<Rectangle>();  // Inicializa el arreglo de posiciones de objetos
 		objetosTipo = new Array<Integer>();   // Inicializa el arreglo de tipos de objetos
     }
+    
     //revisar
     public void templateMethod(Auto auto, SpriteBatch batch, Carretera carretera) {
         crear();
@@ -30,12 +31,14 @@ public abstract class ObjetoCarretera {
         destruir();
     }
     
-
-    public void crear() {
-        // Agrega lógica para crear objetos en la carretera
+    @Override
+    public boolean verificarColision(Auto auto, Rectangle objeto) {
+        // Verifica si hay colisión entre el auto y un objeto rectangular (en este caso, una moneda)
+        if (objeto.overlaps(auto.getArea())) {
+            return true;  // Retorna verdadero si hay colisión
+        }
+        return false;  // Retorna falso si no hay colisión
     }
-
-    public abstract boolean actualizarMovimiento(Auto auto, Carretera carretera);
     
     public void dibujar(SpriteBatch batch) {
         // Dibuja los objetos en la carretera
@@ -49,6 +52,8 @@ public abstract class ObjetoCarretera {
     }
     
     // Metodos Abstractos
+    public abstract void crear();
+    public abstract boolean actualizarMovimiento(Auto auto, Carretera carretera);
     public abstract int getVidas();
     public abstract int getPuntos();
 	protected abstract boolean estaChocado();
