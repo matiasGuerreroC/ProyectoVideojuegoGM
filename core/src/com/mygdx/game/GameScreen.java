@@ -22,7 +22,7 @@ public class GameScreen implements Screen {
 	private Carretera fondo;
 	private GameDesignFactory diseñoJuego;
 	
-	GameMenu game = GameMenu.getInstance();
+	private GameMenu game = GameMenu.getInstance();
 
 	// Constructor que recibe una instancia de GameMenu
 	public GameScreen(final GameMenu game, GameDesignFactory diseñoJuego) {
